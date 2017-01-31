@@ -25,14 +25,24 @@ RSpec.describe Screen, type: Class do
   describe "#at" do
     it "returns the pixel at a specific location" do
       pixel = Pixel.new(255, 200, 175, 1, 1)
+      pixel2 = Pixel.new(100, 170, 150, 1, 2)
+      pixel3 = Pixel.new(235, 220, 35, 1, 3)
       screen.insert(pixel, 1, 2)
+
       p1 = screen.at(1, 2)
 
       expect(pixel).to eq p1
     end
 
     it "handles invalid x, y values gracefully" do
-      pixel = screen.at(-3, -1)
+      p1 = Pixel.new(255, 200, 175, 1, 1)
+      p2 = Pixel.new(100, 170, 150, 9, 8)
+      p3 = Pixel.new(235, 220, 35, 9, 9)
+      screen.insert(p1, 1, 1)
+      screen.insert(p2, 9, 8)
+      screen.insert(p3, 9, 9)
+
+      pixel = screen.at(-1, -1)
 
       expect(pixel).to eq nil
     end
