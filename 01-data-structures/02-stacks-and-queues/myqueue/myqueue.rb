@@ -3,8 +3,8 @@ class MyQueue
 
   def initialize
     @queue = Array.new
-    @head
-    @tail
+    @head = @queue[0]
+    @tail = @queue[0]
   end
 
   def enqueue(element)
@@ -18,7 +18,7 @@ class MyQueue
   end
 
   def empty?
-    (queue.length == 0) ? true : false
+    queue.length == 0
   end
 
   private
@@ -27,12 +27,4 @@ class MyQueue
     @head = queue[0]
     @tail = queue[-1]
   end
-
-  # def head
-  #   queue[0]
-  # end
-  #
-  # def tail
-  #   queue[-1]
-  # end
 end
