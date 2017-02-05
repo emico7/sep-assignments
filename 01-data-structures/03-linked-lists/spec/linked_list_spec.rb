@@ -1,7 +1,7 @@
 include RSpec
 
-require_relative 'node'
-require_relative 'linked_list'
+require_relative '../node'
+require_relative '../linked_list'
 
 RSpec.describe LinkedList, type: Class do
   let(:n1) { Node.new("Rob") }
