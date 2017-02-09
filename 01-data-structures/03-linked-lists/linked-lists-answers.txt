@@ -1,0 +1,11 @@
+Spatial locality is a characteristic of how programs access data.
+A well written program ensures "spatial locality" by having data structures that group together data that are accessed together.
+If data are referenced closely in "time", by placing them also closely in "space" will make programs more efficient by limiting the number of data lookups.
+
+user     system      total        real
+10,000 items into Array:  0.000000   0.000000   0.000000 (  0.000515)
+10,000 items into LinkedList:  0.010000   0.000000   0.010000 (  0.001358)
+Access 5,000th items in Array:   0.000000   0.000000   0.000000 (  0.000402)
+Access 5,000th items in LinkedList:   0.000000   0.000000   0.000000 (  0.001799)
+Delete 5,000th items in Array:   0.000000   0.000000   0.000000 (  0.000475)
+Delete 5,000th items in LinkedList:   0.000000   0.000000   0.000000 (  0.001914)
