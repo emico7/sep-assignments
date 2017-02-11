@@ -34,9 +34,10 @@ class LinkedList
   # This method prints out a representation of the list.
   def print
     arr = []
-    while @head
-      arr << @head.data
-      @head = @head.next
+    node = @head
+    while node
+      arr << node.data
+      node = node.next
     end
     puts arr
   end
