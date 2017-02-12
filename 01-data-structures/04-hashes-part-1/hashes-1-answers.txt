@@ -1,0 +1,1 @@
+Doubling the size of the inner array is a poor idea to handle collision because doubling needs to happen even before all the slots are filled, and the rate that has to happen is not optimized at all. 

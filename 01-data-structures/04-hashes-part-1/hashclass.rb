@@ -8,19 +8,34 @@ class HashClass
 
   def []=(key, value)
     item = HashItem.new(key, value)
+    i = index(key, size)
 
-    # @items.resize if
-    #
+    if @items[i] == nil
+      @items[i] = item
+    elsif (@items[i].key == item.key)
+      @items[i] = item
+    else
+      until @items[i] == nil do
+        resize
+        i = index(key, size)
+      end
+      @items[i] = item
+    end
   end
 
   def [](key)
-    @items[index(key, @items.length)]
+    @items[index(key, @items.length)].value
   end
 
   def resize
-    new_size = @items.length
-    @items.fill(nil, new_size, new_size)
-    @items.length
+    @items.fill(nil, size, size)
+
+    @items.each do |item|
+      if item
+        i = index(item.key, @items.size)
+        @items[i] = item
+      end
+    end
   end
 
   # Returns a unique, deterministically reproducible index into an array
@@ -34,5 +49,4 @@ class HashClass
   def size
     @items.length
   end
-
 end
