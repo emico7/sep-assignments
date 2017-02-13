@@ -1,6 +1,6 @@
 include RSpec
 
-require_relative 'separate_chaining'
+require_relative '../separate_chaining'
 
 RSpec.describe SeparateChaining, type: Class do
   let(:star_wars_movies) { SeparateChaining.new(6) }
@@ -33,7 +33,7 @@ RSpec.describe SeparateChaining, type: Class do
       hash = SeparateChaining.new(4)
       hash["key"] = "value"
       expect(hash.size).to eq 4
-      hash["key"] = "second value"
+      hash["key"] = "value"
       expect(hash.size).to eq 4
     end
 
