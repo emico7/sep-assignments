@@ -28,14 +28,14 @@ class HashClass
   end
 
   def resize
-    @items.fill(nil, size, size)
-
+    arr = Array.new(size * 2)
     @items.each do |item|
       if item
-        i = index(item.key, @items.size)
-        @items[i] = item
+        i = index(item.key, arr.length)
+        arr[i] = item
       end
     end
+    @items = arr
   end
 
   # Returns a unique, deterministically reproducible index into an array
