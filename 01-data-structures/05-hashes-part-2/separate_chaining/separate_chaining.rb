@@ -13,39 +13,46 @@ class SeparateChaining
     i = index(key, size)
 
     if @nodes[i] == nil
-      @nodes[i] = node
-    elsif @nodes[i].key == node.key
-      @nodes[i] = node
-    elsif @nodes[i].key != node.key
-      add_to_linked_list(node, i)
+      @nodes[i] = LinkedList.new
+      @nodes[i].add_to_tail(node)
+    elsif @nodes[i].head.key == node.key
+      @nodes[i].remove_front
+      @nodes[i].add_to_front(node)
+    elsif @nodes[i].head.key != node.key
+      @nodes[i].add_to_tail(node)
+
+      counter = 0
+      node = @nodes[i].head
+      while node
+        node = node.next
+        counter += 1
+      end
+
+      if counter > size
+        resize
+      end
     end
   end
 
   def [](key)
-    counter = 0
-    value = nil
-    @nodes.each do |node|
-      if node && node.key == key
-        counter += 1
+
+    i = index(key, size)
+    target_llist = @nodes[i]
+    return nil unless target_llist
+    curr_node = target_llist.head
+
+    while curr_node do
+      if curr_node.key == key
+        break
       end
+      curr_node = curr_node.next
     end
 
-    if counter > 0
-      value = @nodes[index(key, size)].value
+    if curr_node
+      curr_node.value
     else
-      @nodes.each do |node|
-        if node && node.next
-          curr_node = node
-          while curr_node.next do
-            if curr_node.key == key
-              value = curr_node.value
-            end
-            curr_node = curr_node.next
-          end
-        end
-      end
+      nil
     end
-    value
   end
 
   # Returns a unique, deterministically reproducible index into an array
@@ -57,6 +64,19 @@ class SeparateChaining
 
   # Calculate the current load factor
   def load_factor
+    n_of_items = 0
+    @nodes.each do |node|
+      if node
+        counter = 0
+        curr_node = node.head
+        while curr_node do
+          curr_node = curr_node.next
+          counter += 1
+        end
+      n_of_items += counter
+      end
+    end
+    n_of_items / size.to_f
   end
 
   # Simple method to return the number of items in the hash
@@ -66,46 +86,53 @@ class SeparateChaining
 
   # Resize the hash
   def resize
-    @nodes.fill(nil, size, size)
+    arr = Array.new(size*2)
 
     @nodes.each do |node|
       if node
-        rearrange_items_in_llist(node)
-        i = index(node.key, @nodes.size)
-        @nodes[i] = node
+        curr_node = node.head
+        while curr_node do
+          i = index(curr_node.key, size*2)
+          if arr[i].nil?
+            arr[i] = LinkedList.new
+            arr[i].add_to_tail(curr_node)
+          else
+            arr[i].add_to_tail(curr_node)
+          end
+          curr_node = curr_node.next
+        end
       end
     end
+    @nodes = arr
+  end
+
+  def print
+    arr = []
+    @nodes.each do |node|
+      if node && node.head
+        node.print
+      else
+        puts "nil"
+      end
+    end
+    puts "Load Factor: #{load_factor}"
   end
 
   private
 
-  def add_to_linked_list(node, i)
-    if @nodes[i].next == nil
-      llist = LinkedList.new
-      llist.head = @nodes[i]
-      @nodes[i].next = node
-    elsif @nodes[i].next
-      curr_node = @nodes[i].next
-      counter = 2
-      while curr_node.next do
-        curr_node = curr_node.next
-        counter += 1
-      end
-      if counter < size
-        curr_node.next = node
-        llist.tail = node
-      else
-        resize
-      end
-    end
-  end
-
-  def rearrange_items_in_llist(node)
-    curr_node = node.next
-    while curr_node.next do
-      i = index(curr_node.key, size)
-      @nodes[i] = curr_node
-      curr_node = curr_node.next
-    end
-  end
+  # def llist_size(i)
+  #   counter = 0
+  #   node = @nodes[i].head
+  #   while node
+  #     node = node.next
+  #     counter += 1
+  #   end
+  #   counter
+  # end
 end
+
+h = SeparateChaining.new(4)
+h["key"] = "value"
+h["keytwo"] = "value"
+
+puts h.print

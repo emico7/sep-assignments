@@ -32,15 +32,14 @@ class LinkedList
   end
 
   # This method prints out a representation of the list.
-  # def print
-  #   arr = []
-  #   node = @head
-  #   while node
-  #     arr << node.data
-  #     node = node.next
-  #   end
-  #   puts arr
-  # end
+  def print
+    node = @head
+    loop do
+      break unless node
+      puts node.value
+      node = node.next
+    end
+  end
 
   # This method removes `node` from the list and must keep the rest of the list intact.
   def delete(node)
