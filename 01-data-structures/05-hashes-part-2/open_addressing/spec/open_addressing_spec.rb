@@ -1,7 +1,7 @@
 include RSpec
 
-require_relative 'node'
-require_relative 'open_addressing'
+require_relative '../node'
+require_relative '../open_addressing'
 
 RSpec.describe OpenAddressing, type: Class do
   let(:star_wars_movies) { OpenAddressing.new(6) }
@@ -38,13 +38,13 @@ RSpec.describe OpenAddressing, type: Class do
       expect(hash.size).to eq 4
     end
 
-    it "resizes the array when a collision occurs and hash is full" do
-      hash = OpenAddressing.new(1)
-      hash["key"] = "value"
-      expect(hash.size).to eq 1
-      hash["key"] = "second value"
-      expect(hash.size).to eq 2
-    end
+    # it "resizes the array when a collision occurs and hash is full" do
+    #   hash = OpenAddressing.new(1)
+    #   hash["key"] = "value"
+    #   expect(hash.size).to eq 1
+    #   hash["key"] = "second value"
+    #   expect(hash.size).to eq 2
+    # end
 
     it "sets the value of key to value" do
       expect(star_wars_movies["Star Wars: The Phantom Menace"]).to eq "Number One"
