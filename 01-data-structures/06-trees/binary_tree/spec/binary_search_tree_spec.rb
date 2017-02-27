@@ -1,6 +1,6 @@
 include RSpec
 
-require_relative 'binary_search_tree'
+require_relative '../binary_search_tree'
 
 RSpec.describe BinarySearchTree, type: Class do
   let (:root) { Node.new("The Matrix", 87) }
@@ -69,7 +69,8 @@ RSpec.describe BinarySearchTree, type: Class do
     it "properly finds a left-left node" do
       tree.insert(root, braveheart)
       tree.insert(root, pacific_rim)
-      expect(tree.find(root, pacific_rim.title).title).to eq "Pacific Rim"
+      found = tree.find(root, pacific_rim.title)
+      expect(found.title).to eq "Pacific Rim"
     end
 
     it "properly finds a left-right node" do
